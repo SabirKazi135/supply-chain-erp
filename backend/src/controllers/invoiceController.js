@@ -27,7 +27,7 @@ const getInvoices = async (req, res) => {
     if (draft === "true") {
       filters.isDraft = true;
     } else {
-      filters.isDraft = false;
+      filters.isDraft = { $ne: true };
     }
 
     const invoices = await Invoice.find(filters).sort({ createdAt: -1 });
