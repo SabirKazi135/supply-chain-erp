@@ -8,6 +8,7 @@ const getSummary = async (req, res) => {
     const invoices = await Invoice.find({
       userId: req.user.id,
       companyId,
+      // error is here
     });
 
     const totalInvoices = invoices.length;
