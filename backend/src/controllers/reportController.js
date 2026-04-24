@@ -8,6 +8,7 @@ const getSummary = async (req, res) => {
     const invoices = await Invoice.find({
       userId: req.user.id,
       companyId,
+      isDraft: false,
     });
 
     const totalInvoices = invoices.length;
@@ -41,6 +42,7 @@ const getInvoiceReport = async (req, res) => {
     const invoices = await Invoice.find({
       userId: req.user.id,
       companyId,
+      isDraft: false,
     }).sort({ createdAt: -1 });
 
     res.json(invoices);

@@ -31,6 +31,7 @@ const invoiceSchema = new mongoose.Schema(
 
     subtotal: Number,
     grandTotal: Number,
+    isDraft: { type: Boolean, default: false },
   },
   { timestamps: true },
 );

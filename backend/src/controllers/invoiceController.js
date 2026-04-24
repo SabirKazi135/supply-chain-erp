@@ -17,14 +17,50 @@ const createInvoice = async (req, res) => {
 
 const getInvoices = async (req, res) => {
   try {
-    const { companyId } = req.query;
+    const { companyId, draft } = req.query;
 
-    const invoices = await Invoice.find({
+    const filters = {
       userId: req.user.id,
       companyId,
-    }).sort({ createdAt: -1 });
+    };
+
+    if (draft === "true") {
+      filters.isDraft = true;
+    } else {
+      filters.isDraft = false;
+    }
+
+    const invoices = await Invoice.find(filters).sort({ createdAt: -1 });
 
     res.json(invoices);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+const updateInvoice = async (req, res) => {
+  try {
+    const invoice = await Invoice.findOneAndUpdate(
+      {
+        _id: req.params.id,
+        userId: req.user.id,
+      },
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+
+    if (!invoice) {
+      return res.status(404).json({
+        message: "Invoice not found",
+      });
+    }
+
+    res.json(invoice);
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -73,6 +109,7 @@ const deleteInvoice = async (req, res) => {
 module.exports = {
   createInvoice,
   getInvoices,
+  updateInvoice,
   getInvoiceById,
   deleteInvoice,
 };
