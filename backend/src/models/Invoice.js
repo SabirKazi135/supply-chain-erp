@@ -18,7 +18,7 @@ const invoiceSchema = new mongoose.Schema(
     customerName: String,
     mobile: String,
     billDate: String,
-
+    // sabir
     items: [
       {
         itemId: String,
