@@ -16,9 +16,10 @@ const invoiceSchema = new mongoose.Schema(
 
     billNo: String,
     customerName: String,
+    address: String,
     mobile: String,
     billDate: String,
-    // sabir
+
     items: [
       {
         itemId: String,
@@ -31,7 +32,11 @@ const invoiceSchema = new mongoose.Schema(
 
     subtotal: Number,
     grandTotal: Number,
-    isDraft: { type: Boolean, default: false },
+
+    isDraft: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );
